@@ -8,11 +8,8 @@ from django.contrib.auth import get_user_model
 # Create your views here.
 
 
-
-
-@login_required(login_url='login/')
+# @login_required()
 def register_donation(request):
-
 
     if request.method == 'POST':
         form = DonationRegisterForm(request.POST)
@@ -24,15 +21,13 @@ def register_donation(request):
             user = form.save()
             user.save()
 
-
             return redirect('/')
     else:
         form = DonationRegisterForm()
     return render(request, 'donation_items.html', {'form': form})
 
-@login_required(login_url='login/')
 
-
+# @login_required()
 def register_donated_by(request):
     user = get_user_model()
     if request.method == 'POST':
@@ -51,12 +46,15 @@ def register_donated_by(request):
         form = DonatedByRegistrationForm()
     return render(request, 'registered_donated_by.html', {'form': form})
 
+
 def display_donation(request):
     items = DonationItem.objects.all
     args = {'items': items}
     return render(request, 'display_donation.html', args)
 
-@login_required(login_url='login/')
+# @login_required(login_url='login/')
+
+
 def display_donated_by(request):
     items = Donated.objects.all
     args = {'items': items}
